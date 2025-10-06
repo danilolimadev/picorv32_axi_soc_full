@@ -8,7 +8,7 @@ Este projeto implementa um **System-on-Chip (SoC)** completo baseado no processa
 
 ```
 PL_picorv32_axi_with_hex_tb/
-├── rtl/
+├── src/
 │   ├── soc_top_picorv32_axi.v        # Módulo de topo do SoC
 │   ├── mem_subsystem_axi.v           # Sub-sistema de memória (AXI RAM)
 │   ├── periph_subsystem_axi.v        # Sub-sistema de periféricos (GPIO)
@@ -16,13 +16,10 @@ PL_picorv32_axi_with_hex_tb/
 │   ├── axi_lite_1to2_decoder.v       # Decodificador AXI 1 para 2
 │   ├── axi_lite_1toN_decoder.v       # Decodificador genérico AXI 1 para N
 │   ├── axi_lite_stub.v               # Módulo AXI de debug / placeholder
-│   ├── simple_axi_ram.v              # Memória RAM simples compatível AXI
 │   ├── picorv32.v                    # Núcleo RISC-V PicoRV32 (sem comentários adicionais)
-│   └── ...
-├── sim/
+├── test/
 │   ├── tb_soc_full_test.v            # Testbench principal
 │   ├── firmware.hex                  # Programa de teste (memória inicial)
-│   └── tb_soc_full_test.vcd          # (Gerado após simulação)
 └── README.md
 ```
 
@@ -99,19 +96,3 @@ Durante a simulação, você deverá observar:
 - O sinal `gpio_out` alternando conforme as operações do programa.
 
 ---
-
-## 🧠 Observações
-- O arquivo `picorv32.v` não foi alterado nem comentado para preservar fidelidade ao core original.
-- Todos os demais arquivos possuem comentários explicando a função e os principais blocos de lógica.
-- O testbench inclui validações automáticas para leitura da memória e monitoramento AXI.
-
----
-
-## 🧾 Licença
-Este projeto é de uso livre para estudo e experimentação sob licença MIT.  
-O núcleo **PicoRV32** é de autoria de *Clifford Wolf* e distribuído sob licença permissiva.
-
----
-
-## ✨ Autor
-Projeto e integração: **Danilo Lima**
