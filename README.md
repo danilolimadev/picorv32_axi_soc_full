@@ -54,16 +54,87 @@ Arquivo em formato hexadecimal carregado automaticamente na RAM.
 Representa um programa mínimo que realiza operações de leitura e escrita na memória e periféricos:
 
 ```
-100000b7
-05500113
-0020a023
-0aa00193
-1030a023
-1000a203
-2040a023
-3040a023
-7fdff06f
+a5a5a2b7
+5a528293
+10000337
+00030313
+00532023
+000002b7
+05528293
+20000337
+00030313
+00532023
+deadc2b7
+eef28293
+30000337
+00030313
+00532023
+010202b7
+30428293
+40000337
+00030313
+00532023
+000002b7
+00128293
+50000337
+00030313
+00532023
+10000337
+00030313
+00032383
+00000337
+00030313
+00732023
+20000337
+00030313
+00032403
+00000337
+00430313
+00832023
+000004b7
+00548493
+fff48493
+fe048ce3
+00100073
 ```
+
+O que esse firmware faz (resumo, passo a passo)
+
+O programa usa instruções RV32I simples (LUI + ADDI para formar endereços/imediatos, SW/LW para acessar MMIO, e um pequeno loop) e realiza as seguintes ações na ordem:
+
+GPIO
+
+Escreve a palavra 0xA5A5A5A5 para GPIO_BASE + 0x0 (0x1000_0000).
+
+Em seguida lê GPIO_BASE + 0x0 para um registrador (lêback).
+
+UART
+
+Escreve a palavra 0x00000055 para UART_BASE + 0x0 (0x2000_0000).
+
+Em seguida lê UART_BASE + 0x0 (status/data) e salva o resultado na RAM (em RAM_BASE + 4) para inspeção.
+
+SPI
+
+Escreve 0xDEADBEEF para SPI_BASE + 0x0 (0x3000_0000).
+
+I2C
+
+Escreve 0x01020304 para I2C_BASE + 0x0 (0x4000_0000).
+
+TIMER
+
+Escreve 0x1 para TIMER_BASE + 0x0 (0x5000_0000) (ex.: iniciar o timer).
+
+Verificação em RAM
+
+Lê de GPIO_BASE e armazena a leitura em RAM_BASE + 0x0.
+
+Lê de UART_BASE e armazena a leitura em RAM_BASE + 0x4.
+
+Loop de espera
+
+Um pequeno contador (valor 5) é decrementado em loop (apenas para consumir tempo; ajuda a produzir atividade temporalmente observável nos periféricos), depois o programa executa ebreak para finalizar/entrar em depuração.
 
 ---
 

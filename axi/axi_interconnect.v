@@ -157,12 +157,12 @@ module axi_interconnect (
     assign i2c_awaddr   = m_awaddr[11:0];
     assign timer_awaddr = m_awaddr[11:0];
 
-    assign ram_wdata   = m_wdata;
-    assign gpio_wdata  = m_wdata;
-    assign uart_wdata  = m_wdata;
-    assign spi_wdata   = m_wdata;
-    assign i2c_wdata   = m_wdata;
-    assign timer_wdata = m_wdata;
+    assign ram_wdata   = ram_bvalid ? m_wdata : 0;
+    assign gpio_wdata  = gpio_bvalid ? m_wdata : 0;
+    assign uart_wdata  = uart_bvalid ? m_wdata : 0;
+    assign spi_wdata   = spi_bvalid ? m_wdata : 0;
+    assign i2c_wdata   = i2c_bvalid ? m_wdata : 0;
+    assign timer_wdata = timer_bvalid ? m_wdata : 0;
 
     assign ram_wstrb   = m_wstrb;
     assign gpio_wstrb  = m_wstrb;

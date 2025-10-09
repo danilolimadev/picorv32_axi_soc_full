@@ -13,13 +13,14 @@ module soc_top (
     output wire spi_cs,
 
     // I2C
-    input  wire i2c_sda,
-    input  wire i2c_scl,
-
-    input wire timer_irq
+    input  wire i2c_sda, //não usado
+    input  wire i2c_scl  //não usado
 );
 
     wire trap;
+
+    // timer IRQ is produced by the timer inside the SoC
+    wire timer_irq;
 
     wire        mem_axi_awvalid;
     wire         mem_axi_awready;
@@ -166,23 +167,23 @@ module soc_top (
 
     // Sinais entre interconector e o SPI
 
-        wire [11:0] spi_awaddr;
-        wire        spi_awvalid;
-        wire        spi_awready;
-        wire [31:0] spi_wdata;
-        wire [3:0]  spi_wstrb;
-        wire        spi_wvalid;
-        wire        spi_wready;
-        wire [1:0]  spi_bresp;
-        wire        spi_bvalid;
-        wire        spi_bready;
-        wire [11:0] spi_araddr;
-        wire        spi_arvalid;
-        wire        spi_arready;
-        wire [31:0] spi_rdata;
-        wire [1:0]  spi_rresp;
-        wire        spi_rvalid;
-        wire        spi_rready;
+    wire [11:0] spi_awaddr;
+    wire        spi_awvalid;
+    wire        spi_awready;
+    wire [31:0] spi_wdata;
+    wire [3:0]  spi_wstrb;
+    wire        spi_wvalid;
+    wire        spi_wready;
+    wire [1:0]  spi_bresp;
+    wire        spi_bvalid;
+    wire        spi_bready;
+    wire [11:0] spi_araddr;
+    wire        spi_arvalid;
+    wire        spi_arready;
+    wire [31:0] spi_rdata;
+    wire [1:0]  spi_rresp;
+    wire        spi_rvalid;
+    wire        spi_rready;
 
     // Sinais entre interconector e o I2C
     wire [11:0] i2c_awaddr;
@@ -454,12 +455,7 @@ module soc_top (
         .s_axi_rdata(spi_rdata),
         .s_axi_rresp(spi_rresp),
         .s_axi_rvalid(spi_rvalid),
-        .s_axi_rready(spi_rready),
-
-        .mosi(spi_mosi),
-        .miso(spi_miso),
-        .sck(spi_sck),
-        .cs(spi_cs)
+        .s_axi_rready(spi_rready)
     );
 
     axi_i2c i2c_inst (
@@ -482,11 +478,9 @@ module soc_top (
         .s_axi_rdata(i2c_rdata),
         .s_axi_rresp(i2c_rresp),
         .s_axi_rvalid(i2c_rvalid),
-        .s_axi_rready(i2c_rready),
-
-        .sda(i2c_sda),
-        .scl(i2c_scl)
+        .s_axi_rready(i2c_rready)
     );
+
 
     axi_timer timer_inst (
         .clk(clk),

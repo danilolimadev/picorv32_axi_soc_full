@@ -10,7 +10,7 @@ module uart_rx (
 
   // Estados da máquina
   localparam IDLE = 0, START = 1, DATA = 2, STOP = 3, DONE = 4, ERROR = 5;
-  localparam CLK_PER_BIT = 16'd5208; // Assumindo 9600 baud rate e 50 MHz clock
+  localparam CLK_PER_BIT = 16'd0020;//16'd5208; // Assumindo 9600 baud rate e 50 MHz clock
 
   reg [2:0] state, next_state;
   reg [7:0] shift_reg;
