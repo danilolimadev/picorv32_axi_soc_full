@@ -1,15 +1,7 @@
-// ============================================================================
-//  AXI Interconnect — 1 Master (CPU) -> 6 Slaves (RAM, GPIO, UART, SPI, I2C, TIMER)
-//  Versão completa e simplificada (AXI4-Lite)
-// ============================================================================
-
 module axi_interconnect (
     input  wire clk,
     input  wire resetn,
 
-    // ===============================
-    // Master Interface (CPU)
-    // ===============================
     input  wire [31:0] m_awaddr,
     input  wire        m_awvalid,
     output wire        m_awready,
@@ -28,9 +20,6 @@ module axi_interconnect (
     output wire        m_rvalid,
     input  wire        m_rready,
 
-    // ===============================
-    // Slave 0 — RAM
-    // ===============================
     output wire [31:0] ram_awaddr,
     output wire        ram_awvalid,
     input  wire        ram_awready,
@@ -49,9 +38,6 @@ module axi_interconnect (
     input  wire        ram_rvalid,
     output wire        ram_rready,
 
-    // ===============================
-    // Slave 1 — GPIO
-    // ===============================
     output wire [11:0] gpio_awaddr,
     output wire        gpio_awvalid,
     input  wire        gpio_awready,
@@ -70,9 +56,6 @@ module axi_interconnect (
     input  wire        gpio_rvalid,
     output wire        gpio_rready,
 
-    // ===============================
-    // Slave 2 — UART
-    // ===============================
     output wire [11:0] uart_awaddr,
     output wire        uart_awvalid,
     input  wire        uart_awready,
@@ -91,9 +74,6 @@ module axi_interconnect (
     input  wire        uart_rvalid,
     output wire        uart_rready,
 
-    // ===============================
-    // Slave 3 — SPI
-    // ===============================
     output wire [11:0] spi_awaddr,
     output wire        spi_awvalid,
     input  wire        spi_awready,
@@ -112,9 +92,6 @@ module axi_interconnect (
     input  wire        spi_rvalid,
     output wire        spi_rready,
 
-    // ===============================
-    // Slave 4 — I2C
-    // ===============================
     output wire [11:0] i2c_awaddr,
     output wire        i2c_awvalid,
     input  wire        i2c_awready,
@@ -133,9 +110,6 @@ module axi_interconnect (
     input  wire        i2c_rvalid,
     output wire        i2c_rready,
 
-    // ===============================
-    // Slave 5 — TIMER
-    // ===============================
     output wire [11:0] timer_awaddr,
     output wire        timer_awvalid,
     input  wire        timer_awready,
@@ -155,10 +129,6 @@ module axi_interconnect (
     output wire        timer_rready
 );
 
-    // =========================================================================
-    // Decodificação de endereços
-    // =========================================================================
-    // Cada bloco ocupa 4KB de espaço
     localparam RAM_BASE   = 32'h0000_0000;
     localparam GPIO_BASE  = 32'h1000_0000;
     localparam UART_BASE  = 32'h2000_0000;
@@ -173,9 +143,6 @@ module axi_interconnect (
     wire sel_i2c   = (m_awaddr[31:12] == I2C_BASE[31:12])   || (m_araddr[31:12] == I2C_BASE[31:12]);
     wire sel_timer = (m_awaddr[31:12] == TIMER_BASE[31:12]) || (m_araddr[31:12] == TIMER_BASE[31:12]);
 
-    // =========================================================================
-    // Escrita (AW/W/B)
-    // =========================================================================
     assign ram_awvalid   = m_awvalid && sel_ram;
     assign gpio_awvalid  = m_awvalid && sel_gpio;
     assign uart_awvalid  = m_awvalid && sel_uart;
@@ -246,9 +213,6 @@ module axi_interconnect (
                       sel_i2c   ? i2c_bresp   :
                       sel_timer ? timer_bresp : 2'b00);
 
-    // =========================================================================
-    // Leitura (AR/R)
-    // =========================================================================
     assign ram_arvalid   = m_arvalid && sel_ram;
     assign gpio_arvalid  = m_arvalid && sel_gpio;
     assign uart_arvalid  = m_arvalid && sel_uart;
