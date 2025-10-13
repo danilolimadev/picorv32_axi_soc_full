@@ -8,23 +8,23 @@ Inclui módulos AXI para **GPIO**, **UART**, **SPI**, **I2C**, **TIMER** e **RAM
 ## 🏗️ Estrutura do Projeto
 
 picorv32_axi_soc_full/
-├── axi/
-│ ├── soc_top.v # Módulo de topo do SoC
-│ ├── axi_interconnect.v # Interconexão AXI4-Lite
-│ ├── axi_ram.v # Memória principal compatível AXI
-│ ├── axi_gpio.v # Controlador AXI GPIO
-│ ├── axi_uart.v # Controlador AXI UART (TX/RX)
-│ ├── axi_spi.v # Controlador AXI SPI
-│ ├── axi_i2c.v # Controlador AXI I2C
-│ ├── axi_timer.v # Temporizador AXI
-│ ├── picorv32.v # Núcleo RISC-V PicoRV32
-│ ├── uart_tx.v # Transmissor UART
-│ ├── uart_rx.v # Receptor UART
-│ └── tb_soc_top.v # Testbench principal (na pasta axi/)
+├── firmware.hex
+├── README.md
 ├── test/
-│ └── tb_soc_top.v # Testbench alternativa de integração
-├── firmware.hex # Programa de teste para o SoC
-└── README.md # Este arquivo
+│   └── tb_soc_top.v
+└── axi/
+    ├── axi_gpio.v
+    ├── axi_i2c.v
+    ├── axi_interconnect.v
+    ├── axi_ram.v
+    ├── axi_spi.v
+    ├── axi_timer.v
+    ├── axi_uart.v
+    ├── picorv32.v
+    ├── soc_top.v
+    ├── tb_soc_top.v
+    ├── uart_rx.v
+    └── uart_tx.v
 
 ---
 
