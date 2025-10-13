@@ -7,6 +7,7 @@ Inclui módulos AXI para **GPIO**, **UART**, **SPI**, **I2C**, **TIMER** e **RAM
 
 ## 🏗️ Estrutura do Projeto
 
+```
 picorv32_axi_soc_full/
 ├── firmware.hex
 ├── README.md
@@ -25,6 +26,7 @@ picorv32_axi_soc_full/
     ├── tb_soc_top.v
     ├── uart_rx.v
     └── uart_tx.v
+```
 
 ---
 
